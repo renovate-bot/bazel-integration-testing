@@ -3,6 +3,20 @@ workspace(name = "build_bazel_integration_testing")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+#Remote execution infra
+# Required configuration for remote build execution
+bazel_toolchains_version="31b5dc8c4e9c7fd3f5f4d04c6714f2ce87b126c1"
+bazel_toolchains_sha256="07a81ee03f5feae354c9f98c884e8e886914856fb2b6a63cba4619ef10aaaf0b"
+http_archive(
+         name = "bazel_toolchains",
+         urls = [
+           "https://mirror.bazel.build/github.com/bazelbuild/bazel-toolchains/archive/%s.tar.gz"%bazel_toolchains_version,
+           "https://github.com/bazelbuild/bazel-toolchains/archive/%s.tar.gz"%bazel_toolchains_version
+         ],
+         strip_prefix = "bazel-toolchains-%s"%bazel_toolchains_version,
+         sha256 = bazel_toolchains_sha256,
+)
+
 ## Sanity checks
 
 git_repository(
